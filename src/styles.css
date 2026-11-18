@@ -318,3 +318,11 @@
     animation: none;
   }
 }
+
+@utility animate-walk-sprite {
+  animation: walk-sprite 0.72s steps(8) infinite;
+}
+@keyframes walk-sprite {
+  from { background-position: 0 0; }
+  to { background-position: -800% 0; }
+}

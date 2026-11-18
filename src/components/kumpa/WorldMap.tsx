@@ -1,3 +1,4 @@
+import walkSprite from "@/assets/sprites/kumpa_walk.webp";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -413,9 +414,15 @@ export function WorldMap({ onBoring }: { onBoring: () => void }) {
           <div ref={playerRef} className="pointer-events-none absolute left-0 top-0 w-[120px]">
             {asleep && <p className="animate-bob absolute -top-10 left-16 font-display text-3xl">z z Z… finally</p>}
             <div ref={playerFlipRef}>
-              <div className={cn(walking && "animate-waddle")}>
-                <Kumpa className="w-full" mood={asleep ? "gm" : sweat ? "shook" : "cursed"} sweat={sweat} watching={!walking} />
-              </div>
+              {walking ? (
+                <div
+                  aria-hidden
+                  className="animate-walk-sprite aspect-square w-full scale-125 bg-no-repeat"
+                  style={{ backgroundImage: `url(${walkSprite})`, backgroundSize: "800% 100%" }}
+                />
+              ) : (
+                <Kumpa className="w-full" mood={asleep ? "gm" : sweat ? "shook" : "cursed"} sweat={sweat} watching />
+              )}
             </div>
           </div>
         </div>
