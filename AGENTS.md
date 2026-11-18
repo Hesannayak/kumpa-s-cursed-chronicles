@@ -30,7 +30,7 @@ use the editor.
 <!-- LOVABLE:END -->
 
 <!-- AGENT-MEMORY:BEGIN -->
-- Kumpa site UI lives in `src/components/kumpa/`; the index route shows the open-world `WorldMap` (places defined in `zones.ts`, panels reuse the page sections) and a `?boring=1` stacked fallback — places stay data-driven and sections reusable.
+- Kumpa site UI lives in `src/components/kumpa/`; the index route shows the open-world `WorldMap` (places in `zones.ts`, panels reuse page sections) with a `?boring=1` stacked fallback; `Nav`'s `onWorld` handler drops that param so the header's World link enters the map — places stay data-driven and sections reusable.
 - WorldMap movement/camera run in one rAF loop writing DOM transforms via refs, not React state — avoids re-rendering the big boiling SVG every frame.
 - Meme images are Lovable Assets pointers in `src/assets/memes/*.asset.json`; never commit raw meme PNGs — keeps the repo light.
 - Hand-drawn wobble uses SVG filters from `<SketchFilters />` driven by the `boil` utility; any page using `boil` must render `<SketchFilters />` once.

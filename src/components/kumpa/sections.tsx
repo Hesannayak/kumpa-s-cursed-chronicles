@@ -9,7 +9,7 @@ import { CHAPTERS, COPIUM, TICKER, type Chapter } from "./story";
 
 /* ---------------- nav ---------------- */
 
-export function Nav() {
+export function Nav({ onWorld }: { onWorld?: () => void }) {
   return (
     <header className="sticky top-0 z-40 border-b-4 border-ink bg-wall">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2">
@@ -18,7 +18,18 @@ export function Nav() {
           <span className="font-display text-3xl uppercase">Kumpa</span>
         </a>
         <div className="flex items-center gap-1 text-lg sm:gap-4">
-          <a href="#world" className="rounded px-2 hover:bg-kumpa">World</a>
+          <a
+            href="/"
+            aria-label="Enter the open world of Kumpaland"
+            onClick={(e) => {
+              if (!onWorld) return;
+              e.preventDefault();
+              onWorld();
+            }}
+            className="rounded px-2 hover:bg-kumpa"
+          >
+            World
+          </a>
           <a href="#story" className="rounded px-2 hover:bg-kumpa">Lore</a>
           <a href="#damage" className="rounded px-2 hover:bg-kumpa">Damage</a>
           <a href="#poke" className="rounded px-2 hover:bg-crash">Poke him</a>

@@ -54,7 +54,7 @@ function Index() {
       <SketchFilters />
       {boring ? (
         <div className="min-h-screen overflow-x-clip">
-          <Nav />
+          <Nav onWorld={() => setMode(false)} />
           <div className="fixed bottom-4 right-4 z-50">
             <Button variant="kumpa" size="xl" onClick={() => setMode(false)}>back to the world</Button>
           </div>
