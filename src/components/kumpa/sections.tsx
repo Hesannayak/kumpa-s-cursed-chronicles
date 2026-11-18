@@ -18,6 +18,7 @@ export function Nav() {
           <span className="font-display text-3xl uppercase">Kumpa</span>
         </a>
         <div className="flex items-center gap-1 text-lg sm:gap-4">
+          <a href="#world" className="rounded px-2 hover:bg-kumpa">World</a>
           <a href="#story" className="rounded px-2 hover:bg-kumpa">Lore</a>
           <a href="#damage" className="rounded px-2 hover:bg-kumpa">Damage</a>
           <a href="#poke" className="rounded px-2 hover:bg-crash">Poke him</a>

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
+import { KumpaWorld } from "@/components/kumpa/KumpaWorld";
 import { SketchFilters } from "@/components/kumpa/SketchFilters";
 import { DamageReport, Footer, Hero, Nav, PokeKumpa, Story, Ticker } from "@/components/kumpa/sections";
 
@@ -38,6 +39,7 @@ function Index() {
       <Nav />
       <Hero />
       <Ticker />
+      <KumpaWorld />
       <Story />
       <Ticker reverse />
       <DamageReport />

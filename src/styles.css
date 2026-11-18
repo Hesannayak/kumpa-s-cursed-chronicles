@@ -72,6 +72,7 @@
   --color-cream: var(--cream);
   --color-paper: var(--paper);
   --color-glow: var(--glow);
+  --color-sand: var(--sand);
 }
 
 :root {
@@ -89,6 +90,15 @@
   --cream: oklch(0.96 0.035 85);
   --paper: oklch(0.995 0 0);
   --glow: oklch(0.93 0.13 100);
+  --skin-lilac: oklch(0.88 0.05 300);
+  --skin-butter: oklch(0.89 0.09 90);
+  --skin-mint: oklch(0.91 0.07 145);
+  --skin-ash: oklch(0.88 0.01 280);
+  --skin-teal: oklch(0.75 0.1 205);
+  --skin-cape: oklch(0.6 0.2 25);
+  --skin-screen: oklch(0.86 0.09 225);
+  --skin-tongue: oklch(0.8 0.1 0);
+  --sand: oklch(0.93 0.06 80);
 
   --background: var(--wall);
   --foreground: var(--ink);
@@ -272,8 +282,39 @@
   border-top: 4px solid var(--ink);
 }
 
+@utility animate-walk {
+  animation: walk var(--walk-dur, 30s) linear infinite;
+  animation-delay: var(--walk-delay, 0s);
+}
+
+@keyframes walk {
+  from { transform: translateX(-20vw); }
+  to { transform: translateX(110vw); }
+}
+
+@utility animate-waddle {
+  animation: waddle 0.7s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+
+@keyframes waddle {
+  0%, 100% { transform: rotate(-5deg) translateY(0); }
+  25% { transform: rotate(0deg) translateY(-8px); }
+  50% { transform: rotate(5deg) translateY(0); }
+  75% { transform: rotate(0deg) translateY(-8px); }
+}
+
+@utility animate-drift {
+  animation: drift 40s linear infinite;
+}
+
+@keyframes drift {
+  from { transform: translateX(-10vw); }
+  to { transform: translateX(105vw); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .boil, .boil-slow, .animate-marquee, .animate-twitch, .animate-bob, .animate-sweat, .animate-sparkle {
+  .boil, .boil-slow, .animate-marquee, .animate-twitch, .animate-bob, .animate-sweat, .animate-sparkle, .animate-walk, .animate-waddle, .animate-drift {
     animation: none;
   }
 }
