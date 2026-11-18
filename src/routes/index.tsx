@@ -1,5 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { WorldMap } from "@/components/kumpa/WorldMap";
 
 import { KumpaWorld } from "@/components/kumpa/KumpaWorld";
 import { SketchFilters } from "@/components/kumpa/SketchFilters";
@@ -33,18 +36,40 @@ function Index() {
     return () => document.removeEventListener("visibilitychange", onVis);
   }, []);
 
+  const [boring, setBoring] = useState(false);
+  useEffect(() => {
+    setBoring(new URL(window.location.href).searchParams.get("boring") === "1");
+  }, []);
+  const setMode = (b: boolean) => {
+    const url = new URL(window.location.href);
+    if (b) url.searchParams.set("boring", "1");
+    else url.searchParams.delete("boring");
+    url.searchParams.delete("zone");
+    window.history.replaceState(null, "", url);
+    setBoring(b);
+  };
+
   return (
-    <div className="min-h-screen overflow-x-clip">
+    <>
       <SketchFilters />
-      <Nav />
-      <Hero />
-      <Ticker />
-      <KumpaWorld />
-      <Story />
-      <Ticker reverse />
-      <DamageReport />
-      <PokeKumpa />
-      <Footer />
-    </div>
+      {boring ? (
+        <div className="min-h-screen overflow-x-clip">
+          <Nav />
+          <div className="fixed bottom-4 right-4 z-50">
+            <Button variant="kumpa" size="xl" onClick={() => setMode(false)}>back to the world</Button>
+          </div>
+          <Hero />
+          <Ticker />
+          <KumpaWorld />
+          <Story />
+          <Ticker reverse />
+          <DamageReport />
+          <PokeKumpa />
+          <Footer />
+        </div>
+      ) : (
+        <WorldMap onBoring={() => setMode(true)} />
+      )}
+    </>
   );
 }

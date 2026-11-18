@@ -51,7 +51,7 @@ export function Ticker({ reverse = false }: { reverse?: boolean }) {
 
 /* ---------------- hero ---------------- */
 
-function RunawayButton() {
+export function RunawayButton() {
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [dodges, setDodges] = useState(0);
   const tired = dodges >= 7;
@@ -120,7 +120,7 @@ export function Hero() {
 
 /* ---------------- story ---------------- */
 
-function ChapterPanel({ chapter, index }: { chapter: Chapter; index: number }) {
+export function ChapterPanel({ chapter, index }: { chapter: Chapter; index: number }) {
   const flip = index % 2 === 1;
   return (
     <article

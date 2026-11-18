@@ -157,7 +157,7 @@ interface Walker {
   back?: boolean;
 }
 
-const WALKERS: Walker[] = [
+export const WALKERS: Walker[] = [
   { id: "lil-pump", skin: "var(--skin-lilac)", gear: ["headphones"], size: 150, lane: 0, dur: 34, delay: -4 },
   { id: "sir-sips", skin: "var(--skin-butter)", gear: ["hairs", "cape", "mug"], size: 170, lane: 1, dur: 42, delay: -20, back: true },
   { id: "beach-degen", skin: "var(--skin-mint)", gear: ["hairs", "shorts", "phone"], size: 140, lane: 0, dur: 28, delay: -15 },
