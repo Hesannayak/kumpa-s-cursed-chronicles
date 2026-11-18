@@ -28,3 +28,9 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+<!-- AGENT-MEMORY:BEGIN -->
+- Kumpa site UI lives in `src/components/kumpa/` (Kumpa SVG, story data, page sections); the index route only composes sections — keeps the single-page story easy to reorder.
+- Meme images are Lovable Assets pointers in `src/assets/memes/*.asset.json`; never commit raw meme PNGs — keeps the repo light.
+- Hand-drawn wobble uses SVG filters from `<SketchFilters />` driven by the `boil` utility; any page using `boil` must render `<SketchFilters />` once.
+<!-- AGENT-MEMORY:END -->
