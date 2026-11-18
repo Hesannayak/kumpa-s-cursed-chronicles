@@ -1,4 +1,5 @@
 import walkSprite from "@/assets/sprites/kumpa_walk.webp";
+import idleSprite from "@/assets/sprites/kumpa_idle.webp";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -421,7 +422,7 @@ export function WorldMap({ onBoring }: { onBoring: () => void }) {
                   style={{ backgroundImage: `url(${walkSprite})`, backgroundSize: "800% 100%" }}
                 />
               ) : (
-                <Kumpa className="w-full" mood={asleep ? "gm" : sweat ? "shook" : "cursed"} sweat={sweat} watching />
+                <img src={idleSprite} alt="" aria-hidden draggable={false} className="aspect-square w-full scale-125 animate-bob" />
               )}
             </div>
           </div>
