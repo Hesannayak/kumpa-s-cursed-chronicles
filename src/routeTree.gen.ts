@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiKumpaAskRouteImport } from './routes/api/kumpa-ask'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiKumpaAskRoute = ApiKumpaAskRouteImport.update({
+  id: '/api/kumpa-ask',
+  path: '/api/kumpa-ask',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/kumpa-ask': typeof ApiKumpaAskRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/kumpa-ask': typeof ApiKumpaAskRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/kumpa-ask': typeof ApiKumpaAskRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/api/kumpa-ask'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/api/kumpa-ask'
+  id: '__root__' | '/' | '/api/kumpa-ask'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiKumpaAskRoute: typeof ApiKumpaAskRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/kumpa-ask': {
+      id: '/api/kumpa-ask'
+      path: '/api/kumpa-ask'
+      fullPath: '/api/kumpa-ask'
+      preLoaderRoute: typeof ApiKumpaAskRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiKumpaAskRoute: ApiKumpaAskRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

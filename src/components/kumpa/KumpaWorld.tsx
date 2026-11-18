@@ -1,6 +1,9 @@
 import { useState } from "react";
 
+import { AskCousin } from "./AskCousin";
+import { COUSINS } from "./cousins";
 import { Sparkle } from "./Sparkle";
+import { WorldProps } from "./WorldProps";
 
 type Gear = "headphones" | "chef" | "glasses3d" | "phone" | "cape" | "shorts" | "mug" | "hairs";
 
@@ -144,7 +147,7 @@ export function KumpaCritter({ skin, gear, className }: CritterProps) {
 }
 
 interface Walker {
-  name: string;
+  id: string;
   skin: string;
   gear: Gear[];
   size: number;
@@ -152,29 +155,30 @@ interface Walker {
   dur: number;
   delay: number;
   back?: boolean;
-  quip: string;
 }
 
 const WALKERS: Walker[] = [
-  { name: "Lil Pump", skin: "var(--skin-lilac)", gear: ["headphones"], size: 150, lane: 0, dur: 34, delay: -4, quip: "can't hear the FUD. can't hear anything." },
-  { name: "Sir Sips", skin: "var(--skin-butter)", gear: ["hairs", "cape", "mug"], size: 170, lane: 1, dur: 42, delay: -20, back: true, quip: "my coffee is down 60% too." },
-  { name: "Beach Degen", skin: "var(--skin-mint)", gear: ["hairs", "shorts", "phone"], size: 140, lane: 0, dur: 28, delay: -15, quip: "checking the chart. on vacation. again." },
-  { name: "3D Andy", skin: "var(--skin-ash)", gear: ["headphones", "glasses3d", "phone"], size: 130, lane: 2, dur: 24, delay: -8, back: true, quip: "the candles look better in 3D." },
-  { name: "Chef Rug", skin: "var(--kumpa)", gear: ["chef", "glasses3d", "cape", "phone"], size: 190, lane: 2, dur: 50, delay: -30, quip: "cooking something. don't ask what." },
-  { name: "OG Kumpa", skin: "var(--kumpa)", gear: ["hairs"], size: 120, lane: 1, dur: 22, delay: -2, quip: "zoomed out. still bad." },
+  { id: "lil-pump", skin: "var(--skin-lilac)", gear: ["headphones"], size: 150, lane: 0, dur: 34, delay: -4 },
+  { id: "sir-sips", skin: "var(--skin-butter)", gear: ["hairs", "cape", "mug"], size: 170, lane: 1, dur: 42, delay: -20, back: true },
+  { id: "beach-degen", skin: "var(--skin-mint)", gear: ["hairs", "shorts", "phone"], size: 140, lane: 0, dur: 28, delay: -15 },
+  { id: "3d-andy", skin: "var(--skin-ash)", gear: ["headphones", "glasses3d", "phone"], size: 130, lane: 2, dur: 24, delay: -8, back: true },
+  { id: "chef-rug", skin: "var(--kumpa)", gear: ["chef", "glasses3d", "cape", "phone"], size: 190, lane: 2, dur: 50, delay: -30 },
+  { id: "og-kumpa", skin: "var(--kumpa)", gear: ["hairs"], size: 120, lane: 1, dur: 22, delay: -2 },
 ];
+
+const cousinOf = (id: string) => COUSINS.find((c) => c.id === id)!;
 
 const LANES = [46, 26, 5]; // bottom % per lane (back to front)
 
 export function KumpaWorld() {
-  const [said, setSaid] = useState<string | null>(null);
+  const [picked, setPicked] = useState("og-kumpa");
 
   return (
     <section id="world" className="relative border-b-4 border-ink">
       <div className="bg-cream px-4 py-12 text-center">
         <p className="text-xl">meanwhile, outside…</p>
         <h2 className="boil font-display text-[clamp(3rem,9vw,6.5rem)] uppercase leading-none">Kumpaland</h2>
-        <p className="mt-2 text-xl">a whole world of tired little guys. click one. they have things to say.</p>
+        <p className="mt-2 text-xl">a whole world of tired little guys. click one and ask it anything. it will answer. unfortunately.</p>
       </div>
 
       <div className="relative h-[560px] overflow-hidden border-t-4 border-ink bg-floor md:h-[620px]">
@@ -195,13 +199,14 @@ export function KumpaWorld() {
             <path d="M4 24 C 14 6, 30 6, 44 22 C 56 6, 74 6, 86 22" fill="none" stroke="var(--ink)" strokeWidth="5" strokeLinecap="round" />
           </svg>
         ))}
+        <WorldProps />
         <Sparkle className="animate-sparkle absolute left-[8%] top-[14%] h-8 w-8" />
         <Sparkle className="animate-sparkle absolute left-[46%] top-[6%] h-6 w-6" delay={0.7} />
 
         {/* walkers, back lane first */}
         {[...WALKERS].sort((a, b) => a.lane - b.lane).map((w) => (
           <div
-            key={w.name}
+            key={w.id}
             className="animate-walk absolute left-0"
             style={{
               bottom: `${LANES[w.lane]}%`,
@@ -213,13 +218,13 @@ export function KumpaWorld() {
           >
             <button
               type="button"
-              onClick={() => setSaid(`${w.name}: “${w.quip}”`)}
-              aria-label={`Talk to ${w.name}`}
+              onClick={() => { setPicked(w.id); document.getElementById("ask")?.scrollIntoView({ behavior: "smooth", block: "center" }); }}
+              aria-label={`Ask ${cousinOf(w.id).name} a question`}
               className="group block cursor-pointer"
               style={{ width: w.size * (0.75 + w.lane * 0.15) }}
             >
               <span className="mb-1 block whitespace-nowrap text-center text-sm opacity-0 transition-opacity group-hover:opacity-100">
-                <span className="sketch-thin bg-paper px-2">{w.name}</span>
+                <span className="sketch-thin bg-paper px-2">{cousinOf(w.id).name}</span>
               </span>
               <div className="animate-waddle" style={{ animationDuration: `${0.5 + w.size / 400}s` }}>
                 <KumpaCritter skin={w.skin} gear={w.gear} className="boil-slow w-full" />
@@ -228,19 +233,15 @@ export function KumpaWorld() {
           </div>
         ))}
 
-        {said && (
-          <div className="absolute inset-x-4 top-4 z-30 mx-auto max-w-md">
-            <button
-              type="button"
-              onClick={() => setSaid(null)}
-              className="sketch shadow-hard block w-full bg-paper px-4 py-3 text-xl"
-            >
-              {said}
-              <span className="mt-1 block text-sm text-muted-foreground">(tap to make them stop)</span>
-            </button>
-          </div>
-        )}
       </div>
+      <AskCousin
+        pickedId={picked}
+        onPick={setPicked}
+        renderFace={(id) => {
+          const w = WALKERS.find((x) => x.id === id)!;
+          return <KumpaCritter skin={w.skin} gear={w.gear} className="w-full" />;
+        }}
+      />
     </section>
   );
 }

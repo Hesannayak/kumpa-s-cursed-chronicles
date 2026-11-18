@@ -33,4 +33,5 @@ use the editor.
 - Kumpa site UI lives in `src/components/kumpa/` (Kumpa SVG, story data, page sections); the index route only composes sections — keeps the single-page story easy to reorder.
 - Meme images are Lovable Assets pointers in `src/assets/memes/*.asset.json`; never commit raw meme PNGs — keeps the repo light.
 - Hand-drawn wobble uses SVG filters from `<SketchFilters />` driven by the `boil` utility; any page using `boil` must render `<SketchFilters />` once.
+- Kumpa cousin AI replies stream from the server route `/api/kumpa-ask` (logic in `src/lib/kumpa-ask.server.ts`); personas live in browser-safe `cousins.ts` — keeps the key and prompts server-side.
 <!-- AGENT-MEMORY:END -->
