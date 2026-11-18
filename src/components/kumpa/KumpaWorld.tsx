@@ -41,7 +41,7 @@ export function KumpaCritter({ skin, gear, className }: CritterProps) {
         {has("shorts") && (
           <g>
             <path d="M276 730 C 400 712, 600 712, 728 730 C 730 790, 690 842, 500 842 C 310 842, 272 790, 276 730 Z" fill="var(--skin-teal)" />
-            {[ [450,762],[554,786],[498,818] ].map(([x,y]) => (
+            {([[450, 762], [554, 786], [498, 818]] as const).map(([x,y]) => (
               <circle key={x} cx={x} cy={y} r="9" fill="var(--paper)" strokeWidth="5" />
             ))}
           </g>
@@ -53,7 +53,7 @@ export function KumpaCritter({ skin, gear, className }: CritterProps) {
           {!has("shorts") && <circle cx="350" cy="762" r="7" />}
         </g>
         {/* eyes */}
-        {[ [420, 506, 70], [586, 496, 76] ].map(([cx, cy, r]) => (
+        {([[420, 506, 70], [586, 496, 76]] as const).map(([cx, cy, r]) => (
           <g key={cx}>
             <circle cx={cx} cy={cy} r={r} fill={INK} stroke="none" />
             <circle cx={cx} cy={cy + 4} r={r - 12} fill="var(--crash)" stroke="none" />
